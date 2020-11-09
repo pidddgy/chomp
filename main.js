@@ -7,7 +7,17 @@ let ok = false;
 
 while(!ok) {
     n = parseInt(prompt("Enter number of rows: "))
-    m = parseInt(prompt("Enter number of rows: "))
+
+    while (!Number.isInteger(n)) {
+        alert("That was not an integer!")
+        n = parseInt(prompt("Enter number of rows: "))
+    }
+    
+    m = parseInt(prompt("Enter number of columns: "))
+    while (!Number.isInteger(m)) {
+        alert("That was not an integer!")
+        m = parseInt(prompt("Enter number of columns: "))
+    }
     
     if(Number.isInteger(n) && Number.isInteger(m) && Math.pow(m, n+1) <= 4e8) ok = true;
     if(Math.pow(m, n+1) > 4e8)  {
