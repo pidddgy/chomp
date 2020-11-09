@@ -1,10 +1,9 @@
-console.log('aaa');
-
 // n = rows, m = columns
 let n = null;
 let m = null;
 let ok = false;
 
+// Prompt for input
 while(!ok) {
     n = parseInt(prompt("Enter number of rows: "))
 
@@ -12,7 +11,7 @@ while(!ok) {
         alert("That was not an integer!")
         n = parseInt(prompt("Enter number of rows: "))
     }
-    
+
     m = parseInt(prompt("Enter number of columns: "))
     while (!Number.isInteger(m)) {
         alert("That was not an integer!")
@@ -25,19 +24,18 @@ while(!ok) {
     }
 }
 
-
-
 let init = Array(m).fill(n);
 
 console.log(init);
 
 // bool -> winning state (dynamic programming)
+// Caching states makes sure we don't iterate over the same state multiple times
 let dp = {};
 
-// probability of picking a losing state
+// Probability of picking a losing state
 let prob = {};
 
-// bottom left is bad
+// Top left is bad
 let base = Array(m).fill(0);
 base[0] = 1;
 
@@ -45,6 +43,8 @@ dp[base] = false;
 prob[base] = 0;
 
 let traversed = 0;
+
+// Recursive depth first search function
 dfs = (state) => {
     traversed++;
     console.assert(traversed < Math.pow(m, n+1));
@@ -90,7 +90,7 @@ dfs = (state) => {
 dfs(init);
 console.log("done precomputing all states")
 
-// current state
+// Current state
 let cur = init;
 const sqsz = 100;
 
@@ -103,31 +103,27 @@ setup = () => {
 }
 
 draw = () => {
-    // clear();
     background(220);    
-
 
     let r = Math.floor(mouseY/sqsz);
     let c = Math.floor(mouseX / sqsz);
 
-    // console.log([r, c]);
-    
+    // Draw brown
     fill(188, 143, 143);
     for(let i = 0, j = 0; j < m; i += sqsz, j++) {
         rect(i, 0, sqsz, cur[j]*sqsz);
     }
 
+    // Draw red to indicate what the user will remove
     fill('red');
     for(let i = 0, j = 0; j < m; i += sqsz, j++) {
         if(j >= c) {
-            // console.log("draw at ")
-            // console.log([i, sqsz*(c-1), sqsz, (n-c+1)*sqsz]);
             rect(i, sqsz*(r), sqsz, (min(n)-r+1)*sqsz);
         }
     }
     fill(188, 143, 143);
     
-
+    // Draw grid
     stroke(0);
     strokeWeight(1);
     for(let i = sqsz; i < width; i += sqsz) {
@@ -140,50 +136,37 @@ draw = () => {
 }
 
 mouseClicked = () => {
-    // console.log(mouseX);
-    // console.log(mouseY);
-
     let r = Math.floor(mouseY/sqsz);
     let c = Math.floor(mouseX / sqsz);
 
+    // User loses if they take top left
     if(r == c && r == 0) {
         alert("You lose! Press f5 or reload the page to try again.");
     }
 
-    // console.log([r, c]);
-
+    // Update state
     let sum = 0;
     let rem = false;
     for(let i = c; i < m; i++) {
-        // console.log(i)
-        // console.log("set " + i + " to " + r-1);
-        // console.log("set to: ")
-        // console.log(r)
-        
         if(r <= cur[i]) rem = true;
         cur[i] = Math.min(cur[i], r);
         sum += cur[i];
     }
+
+    // If the user's "move" didn't actually do anything then return 
     if(!rem) return;
 
+    // Check if user has won
     let winningState = Array(m).fill(0);
     winningState[0] = 1;
-    console.log(cur)
-    console.log(winningState)
     if(JSON.stringify(cur) == JSON.stringify(winningState)) {
         alert("You win! Press f5 or reload the page to try again.");
     }
     
 
-    // console.log(cur);
-
-    // if(sum != 0) {
-
-    // }
-    // find best state
+    // Find best state
     let ma = 0;
     best = [];
-    let canwin = false;
     for(let i = 0; i < m; i++) {
         for(let j = 0; j < cur[i]; j++) {
             let to = []
@@ -203,7 +186,6 @@ mouseClicked = () => {
 
             if(!dp[to]) {
                 best = to;
-                canwin = true;
                 break;
             }
 
@@ -212,7 +194,6 @@ mouseClicked = () => {
                 best = to;
             }
         }
-        if(canwin) break;
     }
 
     cur = best;
