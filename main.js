@@ -1,8 +1,20 @@
 console.log('aaa');
 
 // n = rows, m = columns
-let n = 8;
-let m = 5;
+let n = null;
+let m = null;
+let ok = false;
+
+while(!ok) {
+    n = parseInt(prompt("Enter number of rows: "))
+    m = parseInt(prompt("Enter number of rows: "))
+    
+    if(Number.isInteger(n) && Number.isInteger(m) && Math.pow(m, n+1) <= 4e8) ok = true;
+    if(Math.pow(m, n+1) > 4e8)  {
+        alert("Board size too big :( cols^(rows+1) shouldn't be more than ~4*10^8")
+    }
+}
+
 
 
 let init = Array(m).fill(n);
