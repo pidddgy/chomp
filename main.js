@@ -92,7 +92,7 @@ console.log("done precomputing all states")
 
 // Current state
 let cur = init;
-const sqsz = 100;
+const sqsz = 50;
 
 let width = sqsz*m;
 let height = sqsz*n;
