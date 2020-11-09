@@ -165,7 +165,7 @@ mouseClicked = () => {
     
 
     // Find best state
-    let mi = 0;
+    let mi = 1e18;
     best = [];
 
     // found case with guaranteed win
@@ -200,6 +200,9 @@ mouseClicked = () => {
         }
         if(foundg) break;
     }
+
+    console.log("going to: ")
+    console.log(best)
 
     cur = best;
     draw();
