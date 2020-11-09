@@ -1,8 +1,8 @@
 console.log('aaa');
 
 // n = rows, m = columns
-let n = 5;
-let m = 3;
+let n = 8;
+let m = 5;
 
 
 let init = Array(m).fill(n);
@@ -124,16 +124,75 @@ mouseClicked = () => {
     let r = Math.floor(mouseY/sqsz);
     let c = Math.floor(mouseX / sqsz);
 
+    if(r == c && r == 0) {
+        alert("You lose!");
+        cur = init;
+        return;
+    }
+
     // console.log([r, c]);
 
+    let sum = 0;
     for(let i = c; i < m; i++) {
         // console.log(i)
         // console.log("set " + i + " to " + r-1);
         // console.log("set to: ")
         // console.log(r)
         cur[i] = Math.min(cur[i], r);
+        sum += cur[i];
     }
 
+    let winningState = Array(m).fill(0);
+    winningState[0] = 1;
+    console.log(cur)
+    console.log(winningState)
+    if(JSON.stringify(cur) == JSON.stringify(winningState)) {
+        alert("You win!");
+        cur = init;
+        return;
+    }
+    
+
     // console.log(cur);
+
+    // if(sum != 0) {
+
+    // }
+    // find best state
+    let ma = 0;
+    best = [];
+    let canwin = false;
+    for(let i = 0; i < m; i++) {
+        for(let j = 0; j < cur[i]; j++) {
+            let to = []
+            for(let k = 0; k < i; k++) {
+                to.push(cur[k]);
+            }
+            for(let k = i; k < m; k++) {
+                to.push(Math.min(cur[k], j));
+            }
+
+            let sum = 0;
+            for(let k = 0; k < to.length; k++) {
+                sum += to[k];
+            } 
+
+            if(sum == 0) continue;
+
+            if(!dp[to]) {
+                best = to;
+                canwin = true;
+                break;
+            }
+
+            if(prob[to] > ma) {
+                ma = prob[to];
+                best = to;
+            }
+        }
+        if(canwin) break;
+    }
+
+    cur = best;
     draw();
 }
