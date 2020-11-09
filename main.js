@@ -165,7 +165,7 @@ mouseClicked = () => {
     
 
     // Find best state
-    let ma = 0;
+    let mi = 0;
     best = [];
     for(let i = 0; i < m; i++) {
         for(let j = 0; j < cur[i]; j++) {
@@ -189,8 +189,8 @@ mouseClicked = () => {
                 break;
             }
 
-            if(prob[to] > ma) {
-                ma = prob[to];
+            if(prob[to] < mi) {
+                mi = prob[to];
                 best = to;
             }
         }
