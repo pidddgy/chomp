@@ -148,7 +148,7 @@ mouseClicked = () => {
     let sum = 0;
     let rem = false;
     for(let i = c; i < m; i++) {
-        if(r <= cur[i]) rem = true;
+        if(r < cur[i]) rem = true;
         cur[i] = Math.min(cur[i], r);
         sum += cur[i];
     }
