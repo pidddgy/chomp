@@ -143,14 +143,18 @@ mouseClicked = () => {
     // console.log([r, c]);
 
     let sum = 0;
+    let rem = false;
     for(let i = c; i < m; i++) {
         // console.log(i)
         // console.log("set " + i + " to " + r-1);
         // console.log("set to: ")
         // console.log(r)
+        
+        if(r <= cur[i]) rem = true;
         cur[i] = Math.min(cur[i], r);
         sum += cur[i];
     }
+    if(!rem) return;
 
     let winningState = Array(m).fill(0);
     winningState[0] = 1;
