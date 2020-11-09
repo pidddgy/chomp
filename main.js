@@ -167,6 +167,9 @@ mouseClicked = () => {
     // Find best state
     let mi = 0;
     best = [];
+
+    // found case with guaranteed win
+    let foundg = false;
     for(let i = 0; i < m; i++) {
         for(let j = 0; j < cur[i]; j++) {
             let to = []
@@ -186,6 +189,7 @@ mouseClicked = () => {
 
             if(!dp[to]) {
                 best = to;
+                foundg = true;
                 break;
             }
 
@@ -194,6 +198,7 @@ mouseClicked = () => {
                 best = to;
             }
         }
+        if(foundg) break;
     }
 
     cur = best;
