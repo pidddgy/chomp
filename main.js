@@ -137,9 +137,7 @@ mouseClicked = () => {
     let c = Math.floor(mouseX / sqsz);
 
     if(r == c && r == 0) {
-        alert("You lose!");
-        cur = init;
-        return;
+        alert("You lose! Press f5 or reload the page to try again.");
     }
 
     // console.log([r, c]);
@@ -159,9 +157,7 @@ mouseClicked = () => {
     console.log(cur)
     console.log(winningState)
     if(JSON.stringify(cur) == JSON.stringify(winningState)) {
-        alert("You win!");
-        cur = init;
-        return;
+        alert("You win! Press f5 or reload the page to try again.");
     }
     
 
