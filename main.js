@@ -201,9 +201,6 @@ mouseClicked = () => {
         if(foundg) break;
     }
 
-    console.log("going to: ")
-    console.log(best)
-
     cur = best;
     draw();
 }
