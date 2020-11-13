@@ -19,8 +19,8 @@ while(!ok) {
     }
     
     if(Number.isInteger(n) && Number.isInteger(m) && Math.pow(m, n+1) <= 4e8) ok = true;
-    if(Math.pow(m, n+1) > 4e8)  {
-        alert("Board size too big :( cols^(rows+1) shouldn't be more than ~4*10^8")
+    if(Math.pow(m, n+1) > 4e8 || n > 100 || m > 100)  {
+        alert("Board size too big :(")
     }
 }
 
